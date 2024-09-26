@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudyPoint.com</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Sofadi+One&display=swap" rel="stylesheet">
+
+<style>
+    *{
+        font-family: "Roboto", system-ui!important;
+
+    }
+</style>
+</head>
+<body>
+
+    <div class="flex flex-1 bg-gray-800 py-3 px-[10%] justify-between items-center">
+            <a href="{% url 'homepage' %}"><h1 class="text-xl font-bold text-white">StudyPoint.com</h1></a>
+
+            <form action="{% url 'search' %}" method="get" class="flex bg-white">
+                <input type="text" name="q" placeholder="Search for courses, topics, or instructors" size="60" class="bg-transparent w-full px-3 py-2 rounded-md focus:outline-none" />
+                <button type="submit" class="px-4 py-2 rounded-md">
+                    <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"/>
+                      </svg>
+                      
+                </button>
+            </form>
+            <div class="flex items-center">
+                {% if request.user.is_authenticated %}
+               
+                <a href="{% url 'register' %}" class="px-4 mr-2 py-2 rounded-md text-white flex items-center gap-1 ">
+                    <svg class="w-6 h-6 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm0 0a8.949 8.949 0 0 0 4.951-1.488A3.987 3.987 0 0 0 13 16h-2a3.987 3.987 0 0 0-3.951 3.512A8.948 8.948 0 0 0 12 21Zm3-11a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
+                      </svg>
+                      
+                    {{user.username}}
+                </a>
+                <a href="{% url 'logout' %}" class="px-4 py-2 rounded-md flex items-center gap-1  bg-white ">
+                    <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm0 0a8.949 8.949 0 0 0 4.951-1.488A3.987 3.987 0 0 0 13 16h-2a3.987 3.987 0 0 0-3.951 3.512A8.948 8.948 0 0 0 12 21Zm3-11a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
+                      </svg>
+                      
+                    Logout
+                </a>
+                {% else %}
+                <a href="{% url 'register' %}" class="px-4 py-2 rounded-md flex items-center gap-1  bg-white ">
+                    <svg class="w-6 h-6 text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm0 0a8.949 8.949 0 0 0 4.951-1.488A3.987 3.987 0 0 0 13 16h-2a3.987 3.987 0 0 0-3.951 3.512A8.948 8.948 0 0 0 12 21Zm3-11a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
+                      </svg>
+                      
+                    Sign Up
+                </a>
+                <a href="{% url 'login' %}" class="px-4 py-2 ml-4 rounded-md text-black bg-white flex items-center gap-1">
+                    <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-width="1.2" d="M7 17v1a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1a3 3 0 0 0-3-3h-4a3 3 0 0 0-3 3Zm8-9a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
+                      </svg>
+                      
+                    Log In</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="flex flex-1 mt-10 px-[5%] divide-x-2">
+        <div class="w-3/12">
+            <h2 class="text-2xl font-bold text-gray-800">Featured Topics</h2>
+            <div class="flex flex-col p-3">
+                {% for cat in categories %}
+                <a href="{% url 'filter' cat.id %}" class="text-slate-800 px-3 py-2 w-full  flex justify-between items-center hover:bg-slate-100">
+                    <span class="truncate"> {{cat.name}}</span>
+                    <svg class="w-[27px] h-[27px] text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.3" d="m7 16 4-4-4-4m6 8 4-4-4-4"/>
+                      </svg>
+                      
+                   </a>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="w-9/12 pl-3">
+            <div class="">
+                {% block "content" %}
+
+            {% endblock %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>
